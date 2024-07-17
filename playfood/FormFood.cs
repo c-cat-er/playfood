@@ -14,6 +14,8 @@ namespace PlayFood
 {
     public partial class FormFood : Form
     {
+        FormMain formMainInstrance;
+
         SqlConnectionStringBuilder scsb = new SqlConnectionStringBuilder();
 
         public List<string> listHotFoodProductName = new List<string>();
@@ -45,10 +47,17 @@ namespace PlayFood
         {
             InitializeComponent();
             Size = new Size(1033, 741);
+            BackColor = Color.LightSteelBlue;
         }
 
         private void FormFood_Load(object sender, EventArgs e)
         {
+            if (GlobalVar.is管理者登入 == false)
+            {
+                MessageBox.Show("請先登入");
+                Close();
+            }
+
             Label lbl名稱 = new Label();
             lbl名稱.Location = new Point(446, 20);
             lbl名稱.Size = new Size(180, 40);
@@ -94,6 +103,7 @@ namespace PlayFood
             Button btn搜尋 = new Button();
             btn搜尋.Location = new Point(280, 30);
             btn搜尋.Size = new Size(80, 40);
+            btn搜尋.BackColor = Color.LightYellow;
             btn搜尋.Text = "搜尋";
             btn搜尋.Font = new Font("微軟正黑體", 14);
             btn搜尋.Click += new EventHandler(btn搜尋_Click);
@@ -107,12 +117,13 @@ namespace PlayFood
             Controls.Add(flowLayoutPanel);
 
             List<string> listBtnStr商品管理系統 = new List<string>()
-            { "圖片模式", "列表模式", "新增商品", "重新整理" };
+            { "圖片模式", "列表模式", "新增商品", "重新整理", "返回中心" };
 
             List<EventHandler> listEventHandler會員管理系統 = new List<EventHandler>()
             {
                 new EventHandler(btn圖片模式_Click), new EventHandler(btn列表模式_Click),
-                new EventHandler(btn新增商品_Click), new EventHandler(btn重新整理_Click)
+                new EventHandler(btn新增商品_Click), new EventHandler(btn重新整理_Click),
+                new EventHandler(btn返回中心_Click)
             };
 
             int i = 0;
@@ -120,6 +131,7 @@ namespace PlayFood
             {
                 Button btn = new Button();
                 btn.Size = new Size(120, 40);
+                btn.BackColor = Color.LightYellow;
                 btn.Text = str;
                 btn.Font = new Font("微軟正黑體", 14);
                 btn.Click += listEventHandler會員管理系統[i];
@@ -163,7 +175,7 @@ namespace PlayFood
 
 
             scsb.DataSource = @".";
-            scsb.InitialCatalog = "cshap";
+            scsb.InitialCatalog = "playfood";
             scsb.IntegratedSecurity = true;
             GlobalVar.strDBConnectionString = scsb.ConnectionString;
 
@@ -512,6 +524,13 @@ namespace PlayFood
             FormFoodDetails myFormDetail = new FormFoodDetails();
             myFormDetail.selectHID = (int)listView商品展示點心.SelectedItems[0].Tag;
             myFormDetail.ShowDialog();
+        }
+
+        void btn返回中心_Click(object sender, EventArgs e)
+        {
+            Close();
+            formMainInstrance = new FormMain();
+            formMainInstrance.Show();
         }
 
         void btn搜尋_Click(object sender, EventArgs e)

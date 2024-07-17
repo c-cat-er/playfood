@@ -23,13 +23,14 @@ namespace PlayFood
         {
             InitializeComponent();
             Size = new Size(600, 400);
+            BackColor = Color.LightSkyBlue;
         }
 
         private void FormLoginMember_Load(object sender, EventArgs e)
         {
             /*  */
             scsb.DataSource = @".";
-            scsb.InitialCatalog = "cshap";
+            scsb.InitialCatalog = "playfood";
             scsb.IntegratedSecurity = true;
             GlobalVar.strDBConnectionString = scsb.ConnectionString;
 
@@ -71,14 +72,37 @@ namespace PlayFood
             lbl回應訊息.Text = "尚未登入...";
             Controls.Add(lbl回應訊息);
 
+            Button btn會員註冊 = new Button();
+            btn會員註冊.Location = new Point(120, 270);
+            btn會員註冊.Size = new Size(100, 50);
+            btn會員註冊.BackColor = Color.LightBlue;
+            btn會員註冊.Text = "會員註冊";
+            btn會員註冊.Font = new Font("微軟正黑體", 14);
+            btn會員註冊.Click += new EventHandler(btn會員登入_Click);
+            Controls.Add(btn會員註冊);
+
             Button btn會員登入 = new Button();
             btn會員登入.Location = new Point(250, 270);
             btn會員登入.Size = new Size(100, 50);
-            btn會員登入.BackColor = Color.LightBlue;
-            btn會員登入.Text = "登入";
+            btn會員登入.BackColor = Color.LightCyan;
+            btn會員登入.Text = "會員登入";
             btn會員登入.Font = new Font("微軟正黑體", 14);
             btn會員登入.Click += new EventHandler(btn會員登入_Click);
             Controls.Add(btn會員登入);
+
+            Button btn會員登出 = new Button();
+            btn會員登出.Location = new Point(380, 270);
+            btn會員登出.Size = new Size(100, 50);
+            btn會員登出.BackColor = Color.LightBlue;
+            btn會員登出.Text = "會員登出";
+            btn會員登出.Font = new Font("微軟正黑體", 14);
+            btn會員登出.Click += new EventHandler(btn會員登入_Click);
+            Controls.Add(btn會員登出);
+
+            if (GlobalVar.is會員登入 == false)
+            {
+                btn會員登出.Visible = false;
+            }
         }
 
         void btn會員登入_Click(object sender, EventArgs e)

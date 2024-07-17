@@ -29,7 +29,7 @@ namespace PlayFood
         {
             /*  */
             scsb.DataSource = @".";
-            scsb.InitialCatalog = "cshap";
+            scsb.InitialCatalog = "playfood";
             scsb.IntegratedSecurity = true;
             GlobalVar.strDBConnectionString = scsb.ConnectionString;
 
@@ -81,10 +81,19 @@ namespace PlayFood
             btn會員註冊.Location = new Point(250, 270);
             btn會員註冊.Size = new Size(100, 50);
             btn會員註冊.BackColor = Color.LightBlue;
-            btn會員註冊.Text = "註冊";
+            btn會員註冊.Text = "會員註冊";
             btn會員註冊.Font = new Font("微軟正黑體", 14);
             btn會員註冊.Click += new EventHandler(btn會員註冊_Click);
             Controls.Add(btn會員註冊);
+
+            Button btn會員登入 = new Button();
+            btn會員登入.Location = new Point(380, 270);
+            btn會員登入.Size = new Size(100, 50);
+            btn會員登入.BackColor = Color.LightSalmon;
+            btn會員登入.Text = "我要登入";
+            btn會員登入.Font = new Font("微軟正黑體", 14);
+            btn會員登入.Click += new EventHandler(btn會員登入_Click);
+            Controls.Add(btn會員登入);
         }
 
         void btn會員註冊_Click(object sender, EventArgs e)
@@ -121,6 +130,12 @@ namespace PlayFood
             {
                 MessageBox.Show("欄位資料不齊全");
             }*/
+        }
+
+        void btn會員登入_Click(object sender, EventArgs e)
+        {
+            GlobalVar.is會員登入 = true;
+            Close();
         }
 
         private void FormLogin_FormClosing(object sender, FormClosingEventArgs e)

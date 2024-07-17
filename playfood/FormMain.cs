@@ -22,6 +22,7 @@ namespace PlayFood
         {
             InitializeComponent();
             Size = new Size(800, 600);
+            BackColor = Color.LightCyan;
 
             // 添加Activated事件处理程序
             Activated += FormMain_Activated;
@@ -35,15 +36,16 @@ namespace PlayFood
         private void FormMain_Activated(object sender, EventArgs e)
         {
             // 在窗体激活时执行的操作
-            lbl管理者資訊.Text = GlobalVar.管理者資訊;
-
             if (GlobalVar.is管理者登入)
             {
                 btn管理者登入.Visible = false;
                 btn登出.Visible = true;
+                lbl管理者資訊.Text = GlobalVar.管理者資訊;
             }
             else
             {
+                btn管理者登入.Visible = true;
+                btn登出.Visible = false;
                 lbl管理者資訊.Text = "尚未登入...";
             }
         }
@@ -73,9 +75,8 @@ namespace PlayFood
             Controls.Add(lbl管理者資訊);
 
             lbl當日日期 = new Label();
-            lbl當日日期.Location = new Point(500, 60);
-            lbl當日日期.AutoSize = false;
-            lbl當日日期.Size = new Size(160, 30);
+            lbl當日日期.Location = new Point(450, 60);
+            lbl當日日期.Size = new Size(300, 30);
             lbl當日日期.Font = new Font("微軟正黑體", 12);
             Controls.Add(lbl當日日期);
 
@@ -108,8 +109,8 @@ namespace PlayFood
 
             Color[] backgroundColors = new Color[]
             {
-                Color.LightGoldenrodYellow, Color.LightSalmon, Color.LightPink, Color.LightPink,
-                Color.LightCyan, Color.LightCoral, Color.LightSkyBlue, Color.LightPink
+                Color.LightGoldenrodYellow, Color.LightSalmon, Color.LightPink, Color.LightSeaGreen,
+                Color.LightSteelBlue, Color.LightCoral, Color.LightGreen, Color.LightGray
             };
 
             int i = 0;
@@ -138,7 +139,7 @@ namespace PlayFood
 
         public void 更新管理者標籤(string str)
         {
-//            lbl管理者登入.Text = str;
+            //lbl管理者登入.Text = str;
         }
 
         void btn登入_Click(object sender, EventArgs e)
@@ -150,43 +151,50 @@ namespace PlayFood
         void btn菜單_Click(object sender, EventArgs e)
         {
             Form1 form1 = new Form1();
-            form1.ShowDialog();
+            form1.Show();
+            Hide();
         }
 
         void btn購物車_Click(object sender, EventArgs e)
         {
             FormShoppingCart shoppingCart = new FormShoppingCart();
-            shoppingCart.ShowDialog();
+            shoppingCart.Show();
+            Hide();
         }
 
         void btn付款_Click(object sender, EventArgs e)
         {
             FormPay formPay = new FormPay();
-            formPay.ShowDialog();
+            formPay.Show();
+            Hide();
         }
 
         void btn員工管理系統_Click(object sender, EventArgs e)
         {
             FormPersonMang formPersonMang = new FormPersonMang();
-            formPersonMang.ShowDialog();
+            formPersonMang.Show();
+            Hide();
         }
 
         void btn會員管理系統_Click(object sender, EventArgs e)
         {
             FormPersonMang formPersonMang = new FormPersonMang();
-            formPersonMang.ShowDialog();
+            formPersonMang.Show();
+            Hide();
         }
 
         void btn商品管理_Click(object sender, EventArgs e)
         {
             FormFood formFood = new FormFood();
-            formFood.ShowDialog();
+            formFood.Show();
+            Hide();
         }
 
         void btn訂單管理_Click(object sender, EventArgs e)
         {
             FormOrder formOrder = new FormOrder();
-            formOrder.ShowDialog();
+            formOrder.Show();
+            Hide();
         }
 
         void btn系統管理_Click(object sender, EventArgs e)
@@ -202,9 +210,9 @@ namespace PlayFood
             GlobalVar.管理者id = 0;
             GlobalVar.管理者權限 = 0;
             GlobalVar.管理者職稱 = "";
-
-            FormLogin formLogin = new FormLogin();
-            formLogin.ShowDialog();
+            lbl管理者資訊.Text = "尚未登入...";
+            btn管理者登入.Visible = true;
+            btn登出.Visible = false;
         }
 
         private void timer現在時間_Tick(object sender, EventArgs e)
@@ -214,6 +222,7 @@ namespace PlayFood
                 // 定時觸發的事件
                 DateTime currentDateTime = DateTime.Now;
                 lbl當日日期.Text = "現在時間：" + currentDateTime.ToString();
+                lbl當日日期.ForeColor = Color.MediumOrchid;
             }
             catch (Exception ex)
             {

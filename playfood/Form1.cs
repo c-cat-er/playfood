@@ -99,13 +99,19 @@ namespace PlayFood
         private void Form1_Load(object sender, EventArgs e)
         {
             scsb.DataSource = @"."; //伺服器名稱
-            scsb.InitialCatalog = "cshap"; //資料庫名稱
+            scsb.InitialCatalog = "playfood"; //資料庫名稱
             scsb.IntegratedSecurity = true;        // k-p, true 指 windows 驗證。false 指 SQLServer 驗證
             strDBConnectionString = scsb.ConnectionString;      // k-p, ConnectionString 是 SqlConnectionStringBuilder 類的一個屬性，
                                                                 // 包含了用於建立到 SQL Server 的連接所需的信息，例如數據庫名稱、用戶名、密碼等。
 
             ShoppingCartInstance = new FormShoppingCart();  // FormShoppingCart 的實例
 
+            if (GlobalVar.is管理者登入 == false)
+            {
+                MessageBox.Show("請先登入");
+                Close();
+            }
+            
             Label lbl名稱 = new Label();
             lbl名稱.Location = new Point(451, 20);
             lbl名稱.Size = new Size(130, 40);
@@ -116,6 +122,7 @@ namespace PlayFood
             btn會員頭像 = new Button();
             btn會員頭像.Location = new Point(50, 90);
             btn會員頭像.Size = new Size(50, 50);
+            btn會員頭像.BackColor = Color.LightPink;
             btn會員頭像.Text = "點我註冊";
             btn會員頭像.Font = new Font("微軟正黑體", 12);
             btn會員頭像.Click += new EventHandler(btn會員登入_Click);
@@ -153,16 +160,20 @@ namespace PlayFood
             tabControl美食 = new TabControl();
             tabControl美食.Location = new Point(50, 167);
             tabControl美食.Size = new Size(510, 490);
+            tabControl美食.ItemSize = new Size(1, 1);
             Controls.Add(tabControl美食);
 
             tabPage熱食 = new TabPage();
             tabPage熱食.Size = new Size(100, 50);
+            tabPage熱食.BackColor = Color.LightYellow;
             tabControl美食.Controls.Add(tabPage熱食);
 
             tabPage冷食 = new TabPage();
+            tabPage冷食.BackColor = Color.LightYellow;
             tabControl美食.Controls.Add(tabPage冷食);
 
             tabPage點心 = new TabPage();
+            tabPage點心.BackColor = Color.LightYellow;
             tabControl美食.Controls.Add(tabPage點心);
 
             flowLayoutPanel熱食 = new FlowLayoutPanel();
@@ -327,6 +338,7 @@ namespace PlayFood
                 Button btn = new Button();
                 btn.Size = new Size(flowLayoutPanel菜單按鈕.Width / 3 - 6, flowLayoutPanel菜單按鈕.Height / 2 - 8);
                 btn.Text = str;
+                btn.BackColor = Color.LightSalmon;
                 btn.Font = new Font("微軟正黑體", 12);
                 btn.Click += new EventHandler(actions[i]);
                 flowLayoutPanel菜單按鈕.Controls.Add(btn);
@@ -351,6 +363,7 @@ namespace PlayFood
             Button btn至購物車 = new Button();
             btn至購物車.Location = new Point(180, 30);
             btn至購物車.Size = new Size(160, 50);
+            btn至購物車.BackColor = Color.LightBlue;
             btn至購物車.Click += new EventHandler(btn結帳_Click);
             btn至購物車.Text = "前往折扣與抽獎";
             groupBox結帳.Font = new Font("微軟正黑體", 14);

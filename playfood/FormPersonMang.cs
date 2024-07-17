@@ -13,6 +13,8 @@ namespace PlayFood
 {
     public partial class FormPersonMang : Form
     {
+        FormMain formMainInstrance;
+
         SqlConnectionStringBuilder scsb = new SqlConnectionStringBuilder();
         string strDBConnectionString = "";      // 資料庫連線字串
 
@@ -42,15 +44,28 @@ namespace PlayFood
         {
             InitializeComponent();
             Size = new Size(1033, 741);
+            BackColor = Color.LightSteelBlue;
         }
 
         private void FormPersonMang_Load(object sender, EventArgs e)
         {
             scsb.DataSource = @"."; //伺服器名稱
-            scsb.InitialCatalog = "cshap"; //資料庫名稱
+            scsb.InitialCatalog = "playfood"; //資料庫名稱
             scsb.IntegratedSecurity = true;        // k-p, true 指 windows 驗證。false 指 SQLServer 驗證
             strDBConnectionString = scsb.ConnectionString;      // k-p, ConnectionString 是 SqlConnectionStringBuilder 類的一個屬性，
                                                                 // 包含了用於建立到 SQL Server 的連接所需的信息，例如數據庫名稱、用戶名、密碼等。
+
+            if (GlobalVar.is管理者登入 == false)
+            {
+                MessageBox.Show("請先登入");
+                Close();
+            }
+
+            if (GlobalVar.管理者權限 >= 20)
+            {
+                MessageBox.Show("權限不足");
+                Close();
+            }
 
             Label lbl名稱 = new Label();
             lbl名稱.Location = new Point(426, 20);
@@ -65,12 +80,12 @@ namespace PlayFood
             Controls.Add(flowLayoutPanel);
 
             List<string> listBtnStr會員管理系統 = new List<string>()
-            { "所有會員", "會員資料修改", "返回總管理" };
+            { "所有會員", "會員資料修改", "返回中心" };
 
             List<EventHandler> listEventHandler會員管理系統 = new List<EventHandler>()
             {
                 new EventHandler(btn所有會員_Click), new EventHandler(btn會員資料修改_Click),
-                new EventHandler(btn返回總管理_Click)
+                new EventHandler(btn返回中心_Click)
             };
 
             int i = 0;
@@ -78,6 +93,7 @@ namespace PlayFood
             {
                 Button btn = new Button();
                 btn.Size = new Size(130, 50);
+                btn.BackColor = Color.LightYellow;
                 btn.Text = str;
                 btn.Font = new Font("微軟正黑體", 13);
                 btn.Click += listEventHandler會員管理系統[i];
@@ -114,8 +130,9 @@ namespace PlayFood
 
             txt搜尋一 = new TextBox();
             txt搜尋一.Location = new Point(150, 35);
-            txt搜尋一.Size = new Size(120, 23);
             txt搜尋一.Multiline = true;
+            txt搜尋一.Size = new Size(120, 23);
+            txt搜尋一.Font = new Font("微軟正黑體", 11);
             groupBox.Controls.Add(txt搜尋一);
 
             cmb搜尋二 = new ComboBox();
@@ -135,8 +152,9 @@ namespace PlayFood
 
             txt搜尋二 = new TextBox();
             txt搜尋二.Location = new Point(430, 35);
-            txt搜尋二.Size = new Size(120, 23);
             txt搜尋二.Multiline = true;
+            txt搜尋二.Size = new Size(120, 23);
+            txt搜尋二.Font = new Font("微軟正黑體", 11);
             groupBox.Controls.Add(txt搜尋二);
 
             Label lbl開始日 = new Label();
@@ -362,11 +380,11 @@ namespace PlayFood
             tabControl會員.SelectedIndex = tabControl會員.TabPages.IndexOf(tabPage管理者資料修改);
         }
 
-        void btn返回總管理_Click(object sender, EventArgs e)
+        void btn返回中心_Click(object sender, EventArgs e)
         {
-            FormMain formMain = new FormMain();
-            formMain.Show();
             Close();
+            formMainInstrance = new FormMain();
+            formMainInstrance.Show();
         }
 
         void btn清空搜尋欄位_Click(object sender, EventArgs e)
@@ -436,7 +454,7 @@ namespace PlayFood
             {
                 SearchPIDs.Clear();
                 string str欄位名稱一 = cmb搜尋一.SelectedItem.ToString();
-                string str欄位名稱二 = cmb搜尋一.SelectedItem.ToString();
+                string str欄位名稱二 = cmb搜尋二.SelectedItem.ToString();
                 //string sql婚姻狀態語法 = is婚姻狀態 ? "and 婚姻狀態 = 1" : "and 婚姻狀態 = 0";
 
                 SqlConnection con = new SqlConnection(strDBConnectionString);
@@ -460,7 +478,6 @@ namespace PlayFood
 
                     // 將 DataTable 綁定到 DataGridView
                     dgv管理者資料修改列表.DataSource = dataTable;
-
                     dgv管理者資料修改列表.Rows[0].Selected = true;
 
                     // 如果需要，根據所選行來填充其他文本框

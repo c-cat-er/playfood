@@ -15,6 +15,8 @@ namespace PlayFood
 {
     public partial class FormOrder : Form
     {
+        FormMain formMainInstrance;
+
         SqlConnectionStringBuilder scsb = new SqlConnectionStringBuilder();
         string strDBConnectionString = "";      // 資料庫連線字串
 
@@ -44,18 +46,26 @@ namespace PlayFood
         {
             InitializeComponent();
             Size = new Size(1033, 741);
+            BackColor = Color.LightSteelBlue;
         }
 
         private void FormOrder_Load(object sender, EventArgs e)
         {
-            // TODO: 這行程式碼會將資料載入 'cshapDataSet.Orders' 資料表。您可以視需要進行移動或移除。
-            this.ordersTableAdapter.Fill(this.cshapDataSet.Orders);
+            // TODO: 這行程式碼會將資料載入 'playfoodDataSet.Orders' 資料表。您可以視需要進行移動或移除。
+            this.ordersTableAdapter.Fill(this.playfoodDataSet.Orders);
 
             scsb.DataSource = @"."; //伺服器名稱
-            scsb.InitialCatalog = "cshap"; //資料庫名稱
+            scsb.InitialCatalog = "playfood"; //資料庫名稱
             scsb.IntegratedSecurity = true;        // k-p, true 指 windows 驗證。false 指 SQLServer 驗證
             strDBConnectionString = scsb.ConnectionString;      // k-p, ConnectionString 是 SqlConnectionStringBuilder 類的一個屬性，
                                                                 // 包含了用於建立到 SQL Server 的連接所需的信息，例如數據庫名稱、用戶名、密碼等。
+
+
+            if (GlobalVar.is管理者登入 == false)
+            {
+                MessageBox.Show("請先登入");
+                Close();
+            }
 
             Label lbl名稱 = new Label();
             lbl名稱.Location = new Point(426, 20);
@@ -70,12 +80,12 @@ namespace PlayFood
             Controls.Add(flowLayoutPanel);
 
             List<string> listBtnStr訂單管理系統 = new List<string>()
-            { "所有訂單", "訂單資料修改", "數據分析", "返回總管理" };
+            { "所有訂單", "訂單資料修改", "數據分析", "返回中心" };
 
             List<EventHandler> listEH訂單管理系統 = new List<EventHandler>()
             {
                 new EventHandler(btn所有訂單_Click), new EventHandler(btn訂單資料修改_Click),
-                new EventHandler(btn數據分析_Click), new EventHandler(btn返回總管理_Click)
+                new EventHandler(btn數據分析_Click), new EventHandler(btn返回中心_Click)
             };
 
             int i = 0;
@@ -83,6 +93,7 @@ namespace PlayFood
             {
                 Button btn = new Button();
                 btn.Size = new Size(130, 50);
+                btn.BackColor = Color.LightYellow;
                 btn.Text = str;
                 btn.Font = new Font("微軟正黑體", 13);
                 btn.Click += listEH訂單管理系統[i];
@@ -118,8 +129,9 @@ namespace PlayFood
 
             txt搜尋一 = new TextBox();
             txt搜尋一.Location = new Point(150, 35);
-            txt搜尋一.Size = new Size(120, 23);
             txt搜尋一.Multiline = true;
+            txt搜尋一.Size = new Size(120, 23);
+            txt搜尋一.Font = new Font("微軟正黑體", 11);
             groupBox.Controls.Add(txt搜尋一);
 
             cmb搜尋二 = new ComboBox();
@@ -138,8 +150,9 @@ namespace PlayFood
 
             txt搜尋二 = new TextBox();
             txt搜尋二.Location = new Point(430, 35);
-            txt搜尋二.Size = new Size(120, 23);
             txt搜尋二.Multiline = true;
+            txt搜尋二.Size = new Size(120, 23);
+            txt搜尋二.Font = new Font("微軟正黑體", 11);
             groupBox.Controls.Add(txt搜尋二);
 
             Label lbl開始日 = new Label();
@@ -314,7 +327,7 @@ namespace PlayFood
 
             chart營業額 = new Chart();
             chart營業額.Location = new Point(200, 50);
-            chart營業額.Size = new Size(300, 300);
+            chart營業額.Size = new Size(500, 300);
             chart營業額.BackColor = Color.LightBlue;
             tabPage數據分析.Controls.Add(chart營業額);
             讀取資料表生成圖();
@@ -481,7 +494,6 @@ namespace PlayFood
             顯示資料筆數();
         }
 
-
         void 清空欄位()
         {
             txtOID.Clear();
@@ -500,18 +512,17 @@ namespace PlayFood
             tabControl訂單.SelectedIndex = tabControl訂單.TabPages.IndexOf(tabPage訂單資料修改);
         }
 
-        void btn返回總管理_Click(object sender, EventArgs e)
+        void btn返回中心_Click(object sender, EventArgs e)
         {
-            FormMain formMain = new FormMain();
-            formMain.Show();
             Close();
+            formMainInstrance = new FormMain();
+            formMainInstrance.Show();
         }
 
         void btn搜尋_Click(object sender, EventArgs e)
         {
             if (txt搜尋一.Text != "" || txt搜尋二.Text != "")
             {
-                listBox訂單.Items.Clear();
                 SearchOIDs.Clear();
                 string str欄位名稱一 = cmb搜尋一.SelectedItem.ToString();
                 string str欄位名稱二 = cmb搜尋二.SelectedItem.ToString();
@@ -524,17 +535,18 @@ namespace PlayFood
                 cmd.Parameters.AddWithValue("@SearchKeyWordTwo", $"{txt搜尋二.Text}%");
                 SqlDataReader reader = cmd.ExecuteReader();
 
-                int count = 0;
-                while (reader.Read() == true)
-                {
-                    SearchOIDs.Add((int)reader["OID"]);   // k-p, 索引值對應
-                    listBox訂單.Items.Add($"OID: {reader["OID"]}, 訂購人姓名: {reader["訂購人姓名"]}, 訂購人電話: {reader["訂購人電話"]}," +
-                        $"訂購人地址: {reader["訂購人地址"]}");
-                    count++;
-                }
+                // 檢查 DataTable 是否已經存在，若不存在則建立一個新的 DataTable
+                DataTable dataTable = new DataTable();
 
-                if (count > 0)
+                if (reader.HasRows)
                 {
+                    // 將資料加入 DataTable
+                    dataTable.Load(reader);
+
+                    // 將 DataTable 綁定到 DataGridView
+                    dgv訂單資料修改列表.DataSource = dataTable;
+                    dgv訂單資料修改列表.Rows[0].Selected = true;
+
                     // 將 reader 重置到第一條記錄
                     reader.Close();
                     reader = cmd.ExecuteReader();
@@ -551,6 +563,11 @@ namespace PlayFood
                         txt訂單金額.Text = reader["訂單金額"].ToString();
                         dtp預計出貨日.Value = Convert.ToDateTime(reader["預計出貨日"]);
                         dtp預計到貨日.Value = Convert.ToDateTime(reader["預計到貨日"]);
+
+                        foreach (DataRow row in dataTable.Rows)     // 將符合條件的 OID 加入 SearchOIDs
+                        {
+                            SearchOIDs.Add((int)row["OID"]);
+                        }
                     }
                     else
                     {
@@ -585,7 +602,7 @@ namespace PlayFood
                 SqlCommand cmd = new SqlCommand(strSQL, con);
 
                 int 總資料筆數 = (int)cmd.ExecuteScalar();
-                int 目前第幾筆 = dgv訂單資料修改列表.CurrentRow?.Index + 1 ?? 0;
+                int 目前第幾筆 = dgv訂單資料修改列表.CurrentRow?.Index + 1 ?? 0;     // k-p
 
                 lbl筆數.Text = $"第{目前第幾筆}筆/共{總資料筆數}筆";
             } // 在這裡自動關閉連線
@@ -593,7 +610,7 @@ namespace PlayFood
 
         void btn重新整理_Click(object sender, EventArgs e)
         {
-            ((DataTable)dgv訂單資料列表.DataSource)?.Clear();
+            ((DataTable)dgv訂單資料列表.DataSource)?.Clear();     // k-p
             ((DataTable)dgv訂單資料修改列表.DataSource)?.Clear();
             產生訂單資料列表DataGridView();
         }

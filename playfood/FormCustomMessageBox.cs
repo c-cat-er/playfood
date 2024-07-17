@@ -36,13 +36,13 @@ namespace PlayFood
 
             List<string> listBtnStr = new List<string>()
             {
-                "我要註冊", "我要登入" , "不要，直接購買"
+                "返回菜單", "我要註冊", "我要登入" , "不要，直接購買"
             };
 
             List<EventHandler> listEH詢問會員 = new List<EventHandler>()
             {
-                new EventHandler(btn我要註冊_Click), new EventHandler(btn我要登入_Click),
-                new EventHandler(btn直接購買_Click),
+                new EventHandler(btn返回菜單_Click), new EventHandler(btn我要註冊_Click),
+                new EventHandler(btn我要登入_Click), new EventHandler(btn直接購買_Click),
             };
 
             int i = 0;
@@ -50,6 +50,7 @@ namespace PlayFood
             {
                 Button btn = new Button();
                 btn.Size = new Size(180, 50);
+                btn.BackColor = Color.LightBlue;
                 btn.Text = item;
                 btn.Font = new Font("微軟正黑體", 14);
                 btn.Click += listEH詢問會員[i];
@@ -78,16 +79,23 @@ namespace PlayFood
             Close();
         }
 
+        void btn返回菜單_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
         void btn我要註冊_Click(object sender, EventArgs e)
         {
             FormRegister formRegister = new FormRegister();
-            formRegister.ShowDialog();
+            formRegister.Show();
+            Close();
         }
 
         void btn我要登入_Click(object sender, EventArgs e)
         {
             FormLoginMember formLoginMember = new FormLoginMember();
-            formLoginMember.ShowDialog();
+            formLoginMember.Show();
+            Close();
         }
 
         void btn直接購買_Click(object sender, EventArgs e)

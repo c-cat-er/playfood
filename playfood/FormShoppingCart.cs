@@ -47,10 +47,16 @@ namespace PlayFood
         private void FormShoppingCart_Load(object sender, EventArgs e)
         {
             scsb.DataSource = @".";
-            scsb.InitialCatalog = "cshap";
+            scsb.InitialCatalog = "playfood";
             scsb.IntegratedSecurity = true;
             strDBConnectionString = scsb.ConnectionString;
             CheckMemberLogin();
+
+            if (GlobalVar.is管理者登入 == false)
+            {
+                MessageBox.Show("請先登入");
+                Close();
+            }
 
             Label lbl名稱 = new Label();
             lbl名稱.Location = new Point(451, 20);
@@ -111,6 +117,7 @@ namespace PlayFood
             Button btn折扣 = new Button();
             btn折扣.Location = new Point(160, 30);
             btn折扣.Size = new Size(100, 40);
+            btn折扣.BackColor = Color.LightSalmon;
             btn折扣.Text = "折扣";
             btn折扣.Font = new Font("微軟正黑體", 14);
             btn折扣.Click += new EventHandler(btn折扣_Click);
@@ -119,6 +126,7 @@ namespace PlayFood
             Button btn更換折扣 = new Button();
             btn更換折扣.Location = new Point(160, 80);
             btn更換折扣.Size = new Size(100, 40);
+            btn更換折扣.BackColor = Color.LightSalmon;
             btn更換折扣.Text = "更換折扣";
             btn更換折扣.Font = new Font("微軟正黑體", 14);
             btn更換折扣.Click += new EventHandler(btn更換折扣_Click);
@@ -176,6 +184,7 @@ namespace PlayFood
                 Button btn = new Button();
                 btn.Location = new Point(30, 30);
                 btn.Size = new Size(flowLayoutPanel結帳.Width / 2 - 10, flowLayoutPanel結帳.Height / 2 - 10);
+                btn.BackColor = Color.LightBlue;
                 btn.Text = str;
                 btn.Font = new Font("微軟正黑體", 13);
                 btn.Click += listEventHandler[k];
@@ -329,7 +338,7 @@ namespace PlayFood
                 {
                     計算折扣後價格();
                     GlobalVar.is折扣 = !GlobalVar.is折扣;
-                    MessageBox.Show($"您以使用 {txt折扣.Text} 折扣");
+                    MessageBox.Show($"您以使用 <{txt折扣.Text} 折扣碼>，若您想改使用其他 <折扣碼> 請先點擊 [更換折扣]");
                 }
                 else
                 {
@@ -338,7 +347,7 @@ namespace PlayFood
             }
             else
             {
-                MessageBox.Show("已使用過折扣，若要更換折扣請先按更換折扣");
+                MessageBox.Show("您已使用過折扣，若要更換折扣碼請先點擊 [更換折扣]");
             }
 
             計算最終價格();
@@ -569,7 +578,8 @@ namespace PlayFood
             if (hasButtons)
             {
                 FormPay formPay = new FormPay();
-                formPay.ShowDialog();
+                formPay.Show();
+                Hide();
             }
             else
             {

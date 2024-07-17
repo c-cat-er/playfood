@@ -33,7 +33,7 @@ namespace PlayFood
         {
             /*  */
             scsb.DataSource = @".";
-            scsb.InitialCatalog = "cshap";
+            scsb.InitialCatalog = "playfood";
             scsb.IntegratedSecurity = true;
             GlobalVar.strDBConnectionString = scsb.ConnectionString;
 

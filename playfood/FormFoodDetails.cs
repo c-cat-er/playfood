@@ -32,6 +32,12 @@ namespace PlayFood
 
         private void FormFoodDetails_Load(object sender, EventArgs e)
         {
+            if (GlobalVar.is管理者登入 == false)
+            {
+                MessageBox.Show("請先登入");
+                Close();
+            }
+
             /* 左邊 */
             Label lbl名稱 = new Label();
             lbl名稱.Location = new Point(310, 20);
@@ -101,6 +107,7 @@ namespace PlayFood
             Button btn選取商品照片 = new Button();
             btn選取商品照片.Location = new Point(30, 35);
             btn選取商品照片.Size = new Size(140, 40);
+            btn選取商品照片.BackColor = Color.LightYellow;
             btn選取商品照片.Text = "選取商品照片";
             btn選取商品照片.Font = new Font("微軟正黑體", 14);
             btn選取商品照片.Click += new EventHandler(btn選取商品照片1_Click);
@@ -109,6 +116,7 @@ namespace PlayFood
             Button btn儲存修改 = new Button();
             btn儲存修改.Location = new Point(180, 35);
             btn儲存修改.Size = new Size(100, 40);
+            btn儲存修改.BackColor = Color.LightYellow;
             btn儲存修改.Text = "儲存修改";
             btn儲存修改.Font = new Font("微軟正黑體", 14);
             btn儲存修改.Click += new EventHandler(btn儲存修改_Click);
@@ -142,6 +150,7 @@ namespace PlayFood
             Button btn清空欄位 = new Button();
             btn清空欄位.Location = new Point(30, 40);
             btn清空欄位.Size = new Size(120, 40);
+            btn清空欄位.BackColor = Color.LightYellow;
             btn清空欄位.Text = "清空欄位";
             btn清空欄位.Font = new Font("微軟正黑體", 14);
             btn清空欄位.Click += new EventHandler(btn清空欄位_Click);
@@ -150,6 +159,7 @@ namespace PlayFood
             Button btn選取商品照片2 = new Button();
             btn選取商品照片2.Location = new Point(170, 40);
             btn選取商品照片2.Size = new Size(140, 40);
+            btn選取商品照片2.BackColor = Color.LightYellow;
             btn選取商品照片2.Text = "選取商品照片";
             btn選取商品照片2.Font = new Font("微軟正黑體", 14);
             btn選取商品照片2.Click += new EventHandler(btn選取商品照片2_Click);
@@ -158,6 +168,7 @@ namespace PlayFood
             Button btn新增商品 = new Button();
             btn新增商品.Location = new Point(30, 90);
             btn新增商品.Size = new Size(120, 40);
+            btn新增商品.BackColor = Color.LightYellow;
             btn新增商品.Text = "新增商品";
             btn新增商品.Font = new Font("微軟正黑體", 14);
             btn新增商品.Click += new EventHandler(btn新增商品_Click);
@@ -166,6 +177,7 @@ namespace PlayFood
             Button btn返回商品管理 = new Button();
             btn返回商品管理.Location = new Point(170, 90);
             btn返回商品管理.Size = new Size(140, 40);
+            btn返回商品管理.BackColor = Color.LightYellow;
             btn返回商品管理.Text = "返回商品管理";
             btn返回商品管理.Font = new Font("微軟正黑體", 14);
             btn返回商品管理.Click += new EventHandler(btn返回商品管理_Click);

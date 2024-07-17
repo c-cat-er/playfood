@@ -36,15 +36,15 @@
             this.dgv訂單資料修改列表 = new System.Windows.Forms.DataGridView();
             this.tabPage數據分析 = new System.Windows.Forms.TabPage();
             this.ordersBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.cshapDataSet = new PlayFood.cshapDataSet();
-            this.ordersTableAdapter = new PlayFood.cshapDataSetTableAdapters.OrdersTableAdapter();
+            this.playfoodDataSet = new PlayFood.playfoodDataSet();
+            this.ordersTableAdapter = new PlayFood.playfoodDataSetTableAdapters.OrdersTableAdapter();
             this.tabControl訂單.SuspendLayout();
             this.tabPage所有訂單.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv訂單資料列表)).BeginInit();
             this.tabPage訂單資料修改.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv訂單資料修改列表)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ordersBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cshapDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playfoodDataSet)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl訂單
@@ -52,7 +52,7 @@
             this.tabControl訂單.Controls.Add(this.tabPage所有訂單);
             this.tabControl訂單.Controls.Add(this.tabPage訂單資料修改);
             this.tabControl訂單.Controls.Add(this.tabPage數據分析);
-            this.tabControl訂單.ItemSize = new System.Drawing.Size(10, 10);
+            this.tabControl訂單.ItemSize = new System.Drawing.Size(1, 1);
             this.tabControl訂單.Location = new System.Drawing.Point(251, 90);
             this.tabControl訂單.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabControl訂單.Name = "tabControl訂單";
@@ -79,7 +79,7 @@
             this.dgv訂單資料列表.Name = "dgv訂單資料列表";
             this.dgv訂單資料列表.RowHeadersWidth = 51;
             this.dgv訂單資料列表.RowTemplate.Height = 27;
-            this.dgv訂單資料列表.Size = new System.Drawing.Size(1024, 626);
+            this.dgv訂單資料列表.Size = new System.Drawing.Size(1024, 705);
             this.dgv訂單資料列表.TabIndex = 0;
             // 
             // tabPage訂單資料修改
@@ -107,9 +107,9 @@
             // 
             // tabPage數據分析
             // 
-            this.tabPage數據分析.Location = new System.Drawing.Point(4, 14);
+            this.tabPage數據分析.Location = new System.Drawing.Point(4, 5);
             this.tabPage數據分析.Name = "tabPage數據分析";
-            this.tabPage數據分析.Size = new System.Drawing.Size(1035, 706);
+            this.tabPage數據分析.Size = new System.Drawing.Size(1035, 715);
             this.tabPage數據分析.TabIndex = 2;
             this.tabPage數據分析.UseVisualStyleBackColor = true;
             this.tabPage數據分析.Click += new System.EventHandler(this.tabPage數據分析_Click);
@@ -117,12 +117,12 @@
             // ordersBindingSource
             // 
             this.ordersBindingSource.DataMember = "Orders";
-            this.ordersBindingSource.DataSource = this.cshapDataSet;
+            this.ordersBindingSource.DataSource = this.playfoodDataSet;
             // 
-            // cshapDataSet
+            // playfoodDataSet
             // 
-            this.cshapDataSet.DataSetName = "cshapDataSet";
-            this.cshapDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            this.playfoodDataSet.DataSetName = "playfoodDataSet";
+            this.playfoodDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // ordersTableAdapter
             // 
@@ -144,7 +144,7 @@
             this.tabPage訂單資料修改.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv訂單資料修改列表)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ordersBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cshapDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playfoodDataSet)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -157,8 +157,8 @@
         private System.Windows.Forms.TabPage tabPage訂單資料修改;
         private System.Windows.Forms.DataGridView dgv訂單資料修改列表;
         private System.Windows.Forms.TabPage tabPage數據分析;
-        private cshapDataSet cshapDataSet;
+        private playfoodDataSet playfoodDataSet;
         private System.Windows.Forms.BindingSource ordersBindingSource;
-        private cshapDataSetTableAdapters.OrdersTableAdapter ordersTableAdapter;
+        private playfoodDataSetTableAdapters.OrdersTableAdapter ordersTableAdapter;
     }
 }

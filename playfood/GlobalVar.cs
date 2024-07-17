@@ -9,10 +9,10 @@ namespace PlayFood
     internal class GlobalVar
     {
         public static string strDBConnectionString = "";    // 資料庫連線字串
-        public static string image_dir熱食 = @"C:\Users\User\Desktop\iSpan\SecondMidterm\PlayFood\img熱食";      // k-p, 圖檔路徑，記得變更
-        public static string image_dir冷食 = @"C:\Users\User\Desktop\iSpan\SecondMidterm\PlayFood\img冷食";      // k-p, 圖檔路徑，記得變更
-        public static string image_dir點心 = @"C:\Users\User\Desktop\iSpan\SecondMidterm\PlayFood\img點心";      // k-p, 圖檔路徑，記得變更
-        public static string image_dir會員頭像 = @"C:\Users\User\Desktop\iSpan\SecondMidterm\PlayFood\img會員頭像";      // k-p, 圖檔路徑，記得變更
+        public static string image_dir熱食 = @"C:\Users\User\Documents\GitHub\MyPublicWork\program\iSpan\MidtermWork\PlayFood\img熱食";      // k-p, 圖檔路徑，記得變更
+        public static string image_dir冷食 = @"C:\Users\User\Documents\GitHub\MyPublicWork\program\iSpan\MidtermWork\PlayFood\img冷食";      // k-p, 圖檔路徑，記得變更
+        public static string image_dir點心 = @"C:\Users\User\Documents\GitHub\MyPublicWork\program\iSpan\MidtermWork\PlayFood\img點心";      // k-p, 圖檔路徑，記得變更
+        public static string image_dir會員頭像 = @"C:\Users\User\Documents\GitHub\MyPublicWork\program\iSpan\MidtermWork\PlayFood\img會員頭像";      // k-p, 圖檔路徑，記得變更
 
         /*  */
         public static Dictionary<string, int> dict所有名稱價格 = new Dictionary<string, int>()

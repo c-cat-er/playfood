@@ -26,17 +26,26 @@ namespace PlayFood
         PictureBox pictureBox付款效果;
         bool hasShownMessageBox旋轉的 = false;
 
+        Panel panel信用卡;
+
         public FormPay()
         {
             InitializeComponent();
             Size = new Size(800, 600);
-            Activated += FormMain_Activated;
+            BackColor = Color.LightYellow;
+            Activated += FormPay_Activated;
         }
 
-        private void FormMain_Activated(object sender, EventArgs e)
+        private void FormPay_Activated(object sender, EventArgs e)
         {// 在窗体激活时执行的操作
             if (GlobalVar.is會員登入)
             {
+                btn會員頭像.Text = "";
+                string 修改後的會員頭像檔名 = GlobalVar.image_dir會員頭像 + @"\" + GlobalVar.會員頭像;
+                Image 完整圖檔路徑 = Image.FromFile(修改後的會員頭像檔名);
+                Image 縮放後的圖像 = ScaleImage(完整圖檔路徑, btn會員頭像.Width, btn會員頭像.Height);     // 等比例缩放图像以适应按钮大小
+                btn會員頭像.Image = 縮放後的圖像;
+
                 using (SqlConnection con = new SqlConnection(strDBConnectionString))
                 {
                     con.Open();
@@ -51,6 +60,9 @@ namespace PlayFood
                             txt地址.Text = reader["會員地址"].ToString();
                             int 等級 = Convert.ToInt32(reader["會員等級"]);
                             int 點數 = Convert.ToInt32(reader["會員點數"]);
+
+                            txt姓名.ReadOnly = true;
+                            txt電話.ReadOnly = true;
                         }
                     }
                 }
@@ -63,9 +75,15 @@ namespace PlayFood
         private void FormPay_Load(object sender, EventArgs e)
         {
             scsb.DataSource = @"."; //伺服器名稱
-            scsb.InitialCatalog = "cshap"; //資料庫名稱
+            scsb.InitialCatalog = "playfood"; //資料庫名稱
             scsb.IntegratedSecurity = true;        // k-p, true 指 windows 驗證。false 指 SQLServer 驗證
             strDBConnectionString = scsb.ConnectionString;      // k-p, ConnectionString 是 SqlConnectionStringBuilder 類的一個屬性，
+
+            if (GlobalVar.is管理者登入 == false)
+            {
+                MessageBox.Show("請先登入");
+                Close();
+            }
 
             Label lbl名稱 = new Label();
             lbl名稱.Location = new Point(335, 20);
@@ -84,6 +102,7 @@ namespace PlayFood
             btn會員頭像 = new Button();
             btn會員頭像.Location = new Point(30, 30);
             btn會員頭像.Size = new Size(50, 50);
+            btn會員頭像.BackColor = Color.LightPink;
             btn會員頭像.Text = "點我登入";
             btn會員頭像.Font = new Font("微軟正黑體", 12);
             btn會員頭像.Click += new EventHandler(btn會員登入_Click);
@@ -167,21 +186,136 @@ namespace PlayFood
             {
                 Button btn = new Button();
                 btn.Size = new Size(110, 45);
+                btn.BackColor = Color.LightSalmon;
                 btn.Text = str;
                 btn.Font = new Font("微軟正黑體", 14);
+                btn.Click += listEH詢問會員[j];
                 flowLayoutPanel付款方式.Controls.Add(btn);
                 j++;
             }
-
+            
             pictureBoxQRCode = new PictureBox();
             pictureBoxQRCode.Location = new Point(375, 280);
             pictureBoxQRCode.Size = new Size(150, 150);
             pictureBoxQRCode.BackColor = Color.LightGray;
             Controls.Add(pictureBoxQRCode);
+            
+            panel信用卡 = new Panel();
+            panel信用卡.Location = new Point(50, 380);
+            panel信用卡.Size = new Size(400, 150);
+            panel信用卡.BackColor = Color.LightGray;
+            panel信用卡.Visible = false;
+            Controls.Add(panel信用卡);
 
+            Label lbl信用卡卡號 = new Label();
+            lbl信用卡卡號.Location = new Point(20, 20);
+            lbl信用卡卡號.Size = new Size(110, 25);
+            lbl信用卡卡號.Text = "信用卡卡號：";
+            lbl信用卡卡號.Font = new Font("微軟正黑體", 12);
+            panel信用卡.Controls.Add(lbl信用卡卡號);
+
+            Label lbl到期日 = new Label();
+            lbl到期日.Location = new Point(20, 50);
+            lbl到期日.Size = new Size(80, 25);
+            lbl到期日.Text = "到期日：";
+            lbl到期日.Font = new Font("微軟正黑體", 12);
+            panel信用卡.Controls.Add(lbl到期日);
+
+            Label lbl月 = new Label();
+            lbl月.Location = new Point(200, 50);
+            lbl月.Size = new Size(50, 25);
+            lbl月.Text = "月(Month)";
+            lbl月.Font = new Font("微軟正黑體", 12);
+            panel信用卡.Controls.Add(lbl月);
+
+            Label lbl年 = new Label();
+            lbl年.Location = new Point(320, 50);
+            lbl年.Size = new Size(60, 25);
+            lbl年.Text = "年(Year)";
+            lbl年.Font = new Font("微軟正黑體", 12);
+            panel信用卡.Controls.Add(lbl年);
+
+            Label lbl末三碼 = new Label();
+            lbl末三碼.Location = new Point(20, 80);
+            lbl末三碼.Size = new Size(80, 25);
+            lbl末三碼.Text = "末三碼：";
+            lbl末三碼.Font = new Font("微軟正黑體", 12);
+            panel信用卡.Controls.Add(lbl末三碼);
+
+            Label lbl驗證碼 = new Label();
+            lbl驗證碼.Location = new Point(20, 110);
+            lbl驗證碼.Size = new Size(80, 25);
+            lbl驗證碼.Text = "驗證碼：";
+            lbl驗證碼.Font = new Font("微軟正黑體", 12);
+            panel信用卡.Controls.Add(lbl驗證碼);
+
+            TextBox txt信用卡卡號一 = new TextBox();
+            txt信用卡卡號一.Location = new Point(140, 20);
+            txt信用卡卡號一.Size = new Size(50, 20);
+            txt信用卡卡號一.Multiline = true;
+            txt信用卡卡號一.Font = new Font("微軟正黑體", 11);
+            panel信用卡.Controls.Add(txt信用卡卡號一);
+
+            TextBox txt信用卡卡號二 = new TextBox();
+            txt信用卡卡號二.Location = new Point(195, 20);
+            txt信用卡卡號二.Size = new Size(50, 20);
+            txt信用卡卡號二.Font = new Font("微軟正黑體", 11);
+            panel信用卡.Controls.Add(txt信用卡卡號二);
+
+            TextBox txt信用卡卡號三 = new TextBox();
+            txt信用卡卡號三.Location = new Point(250, 20);
+            txt信用卡卡號三.Size = new Size(50, 20);
+            txt信用卡卡號三.Font = new Font("微軟正黑體", 11);
+            panel信用卡.Controls.Add(txt信用卡卡號三);
+
+            TextBox txt信用卡卡號四 = new TextBox();
+            txt信用卡卡號四.Location = new Point(305, 20);
+            txt信用卡卡號四.Size = new Size(50, 20);
+            txt信用卡卡號四.Font = new Font("微軟正黑體", 11);
+            panel信用卡.Controls.Add(txt信用卡卡號四);
+
+            ComboBox cmb月 = new ComboBox();
+            cmb月.Location = new Point(140, 50);
+            cmb月.Size = new Size(50, 20);
+            cmb月.Font = new Font("微軟正黑體", 11);
+            panel信用卡.Controls.Add(cmb月);
+
+            for (int k = 1; k <= 12; k++)
+            {
+                cmb月.Items.Add(k);
+            }
+            cmb月.SelectedIndex = 0;
+
+            ComboBox cmb年 = new ComboBox();
+            cmb年.Location = new Point(260, 50);
+            cmb年.Size = new Size(50, 20);
+            cmb年.Font = new Font("微軟正黑體", 11);
+            panel信用卡.Controls.Add(cmb年);
+
+            for (int l = 1; l <= 24; l++)
+            {
+                cmb年.Items.Add(l);
+            }
+            cmb年.SelectedIndex = 0;
+
+            TextBox txt末三碼 = new TextBox();
+            txt末三碼.Location = new Point(140, 80);
+            txt末三碼.Size = new Size(50, 20);
+            txt末三碼.Font = new Font("微軟正黑體", 11);
+            panel信用卡.Controls.Add(txt末三碼);
+
+            TextBox txt驗證碼 = new TextBox();
+            txt驗證碼.Location = new Point(140, 110);
+            txt驗證碼.Size = new Size(70, 20);
+            txt驗證碼.Font = new Font("微軟正黑體", 11);
+            panel信用卡.Controls.Add(txt驗證碼);
+
+
+            //
             Button btn付款完成 = new Button();
             btn付款完成.Location = new Point(540, 280);
             btn付款完成.Size = new Size(105, 100);
+            btn付款完成.BackColor = Color.LightBlue;
             btn付款完成.Text = "開始支付 / 付款完成";
             btn付款完成.Click += new EventHandler(btn付款完成_Click);
             btn付款完成.Font = new Font("微軟正黑體", 14);
@@ -190,12 +324,13 @@ namespace PlayFood
             Button btn輸出訂單 = new Button();
             btn輸出訂單.Location = new Point(540, 400);
             btn輸出訂單.Size = new Size(105, 50);
+            btn輸出訂單.BackColor = Color.LightBlue;
             btn輸出訂單.Text = "輸出訂單";
             btn輸出訂單.Click += new EventHandler(btn輸出訂單_Click);
             btn輸出訂單.Font = new Font("微軟正黑體", 14);
             Controls.Add(btn輸出訂單);
 
-            
+            /*
             pictureBox付款效果 = new PictureBox();
             pictureBox付款效果.Location = new Point(350, 250);
             pictureBox付款效果.Size = new Size(100, 100);
@@ -203,7 +338,7 @@ namespace PlayFood
             pictureBox付款效果.Invalidate();    // 在非同步動畫更新時，使用 Invalidate 觸發 pictureBox 重新繪製
             Controls.Add(pictureBox付款效果);
             pictureBoxQRCode.SendToBack(); // 確保 QR Code 在 Z 軸上處於最底層
-            pictureBox付款效果.BringToFront();   // 將 PictureBox 顯示在最上層
+            pictureBox付款效果.BringToFront();   // 將 PictureBox 顯示在最上層*/
         }
 
         private Image ScaleImage(Image sourceImage, int targetWidth, int targetHeight)
@@ -246,7 +381,8 @@ namespace PlayFood
 
         void btn信用卡_Click(object sender, EventArgs e)
         {
-
+            pictureBoxQRCode.Visible = false;
+            panel信用卡.Visible = true;
         }
 
         void btn街口支付_Click(object sender, EventArgs e)
@@ -256,12 +392,13 @@ namespace PlayFood
 
         void btnQRCode_Click(object sender, EventArgs e)
         {
-
+            pictureBoxQRCode.Visible = true;
+            panel信用卡.Visible = false;
         }
 
         
         private void pictureBox付款效果_Paint(object sender, PaintEventArgs e)
-        {
+        {/*
             // 自定義繪製邏輯，例如繪製透明的圓圈
             using (Graphics g = e.Graphics)
             {
@@ -273,7 +410,7 @@ namespace PlayFood
                 {
                     g.FillEllipse(brush, pictureBox付款效果.ClientRectangle);
                 }
-            }
+            }*/
         }
 
         void btn輸出訂單_Click(object sender, EventArgs e)
@@ -400,6 +537,8 @@ namespace PlayFood
                 await Task.Delay(5000);*/
 
 
+                MessageBox.Show("支付完成，若是現場的客人請等候叫號取餐，若是線上訂購的客人，請點擊 [輸出訂單] 等候配送與取餐。\n感謝您的購物，歡迎下次光臨。");
+
                 // 輸出訂單
                 SqlConnection con = new SqlConnection(strDBConnectionString);
                 con.Open();
@@ -449,6 +588,7 @@ namespace PlayFood
                     int row = cmd.ExecuteNonQuery();
                     con.Close();
                     MessageBox.Show($"({row}個資料列受到影響)");
+                    Close();
                 }
             }
             else
