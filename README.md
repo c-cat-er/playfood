@@ -9,11 +9,11 @@
 - 所用語言：C#
 - 所用框架：WinForms。
 - 所用資料庫：MSSQL。
-- [圖片預覽](https://github.com/c-cat-er/MyPublicWork/tree/main/program/iSpan/MidtermWork/PlayFood_images)
+- [圖片預覽](https://github.com/c-cat-er/playfood/tree/main/images)
 - [影片預覽]
 
-1. [-1]()。
-2. [-2]()。
+1. [-1](https://github.com/c-cat-er/playfood/tree/main/images)。
+2. [-2](https://github.com/c-cat-er/playfood/tree/main/images)。
 
 ## 功能概述：
 
@@ -31,7 +31,7 @@
 # 或要看其他專案
 
 - [web modpack 連結 1](https://github.com/c-cat-er/ModPack)
-- [web modpack 連結 2]()
+- [web modpack 連結 2](https://github.com/c-cat-er/ModPack)
 
 ## modpack 相關影片
 
