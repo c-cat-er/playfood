@@ -14,6 +14,10 @@
 
 1. [-1](https://github.com/c-cat-er/playfood/tree/main/images)。
 2. [-2](https://github.com/c-cat-er/playfood/tree/main/images)。
+- 啟用帳密：
+A:1 P:1
+A:2 P:2
+A:3 P:3
 
 ## 功能概述：
 
@@ -32,6 +36,7 @@
 
 - [web modpack 連結 1](https://github.com/c-cat-er/ModPack)
 - [web modpack 連結 2](https://github.com/c-cat-er/ModPack)
+- [其他專案連結(更新或常態時不公開，若有收到連結請聯繫LINE或電話)](https://github.com/c-cat-er/MyPublicWork)
 
 ## modpack 相關影片
 
