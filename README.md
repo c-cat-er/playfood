@@ -47,3 +47,9 @@ A:3 P:3
 3. https://youtube.com/clip/UgkxufyE_C1COCw1fIsYwZ8zbPY4nDqpQZpe?si=X-y9RUBYOBQonTCP
 4. https://youtube.com/clip/UgkxfSzs0K9cu64nsxCUk7AYbJe4t_wU9KTa?si=QIvGfPK7TLk-VQOm
 5. https://youtube.com/clip/UgkxjajytInGkyi_TV6-wtrm2DpWDuPD6At5?si=FB0ONMIF1jCGyGFz
+
+## 我的專案發展史
+1. 2023-12 winform playfood
+2. 2024-01 ~ 2024-03 website modpack
+3. 2024-06 website booi
+4. 2024-07 website lodg
