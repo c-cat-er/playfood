@@ -5,11 +5,12 @@ booi
 │
 ├── 開發流程:
 │   ├── 1. 配置 appsettings.json 和 Program.cs。
-│   └── 2. 加入所有檔案。
+│   ├── 2. 加入所有檔案。
+│   └── 3. 所有資料只放在 booi.Server。
 │
 ├── 檔案架構:
 │   ├── booi.Server
-│   │   ├── EF Core Tool + Db 所需三套件
+│   │   ├── EF Core Tool
 │   │   ├── \Controllers
 │   │   │   ├── MWuController
 │   │   │   ├── MWcController
@@ -20,6 +21,7 @@ booi
 │   └── booi.clientN
 │       ├── \Controllers
 │       │   └── HomeController
+│       │       └── include GET POST to server
 │       ├── \Services
 │       │   └── UrlSettings
 │       ├── \DTOs
@@ -31,19 +33,22 @@ booi
 │       │   │   ├── Register
 │       │   │   │   ├── Install pack JWT
 │       │   │   │   ├── Install pack BCrypt.Net-Next(HashPassword)
-│       │   │   │   └── 1. 密碼哈希加密後儲存 Db。
+│       │   │   │   └── action POST
 │       │   │   ├── Login
 │       │   │   │   ├── Install pack JWT Token
+│       │   │   │   ├── action POST
 │       │   │   │   ├── 1. use skill TempData 帶入 VM 多屬性(Model + List)。
 │       │   │   │   ├── 2. 每次需要驗證的 API 請求中，將 JWT token 包含在 Authorization header 中
 │       │   │   │   ├── 3. 在 API 中使用 JWT middleware 驗證 token 的有效性。
 │       │   │   │   ├── 4. 若登入成功，儲存登入者信息到 JWT Token。
 │       │   │   │   └── 5. use skill alert and TempData 跳出登入通知，再跳轉畫面。
 │       │   │   ├── Index
+│       │   │   │   ├── action GET
 │       │   │   │   └── 1. action 判斷有無登入後創建的 JWT Token。
 │       │   │   ├── Query
-│       │   │   │   ├── Install pack Flatpickr
-│       │   │   │   ├── Install pack DataTables
+│       │   │   │   ├── Install pack F
+│       │   │   │   ├── Install pack D
+│       │   │   │   ├── fetch GET
 │       │   │   │   ├── 1. action 判斷有無登入後創建的 JWT Token。
 │       │   │   │   ├── 2. use TimeSpan 帶入下拉值範圍。
 │       │   │   │   ├── 3. use skill Fetch-API GET&POST
@@ -51,18 +56,20 @@ booi
 │       │   │   │   ├── 5. use ASP.NET Form 跳轉 url。
 │       │   │   │   ├── 6. use Session Storage 帶出信息到其他 View。
 │       │   │   │   └── 7. use Local Storage 帶出信息到其他 View。
-│       │   │   ├── Registration
-│       │   │   │   ├── Install pack Flatpickr
-│       │   │   │   ├── Install pack DataTables
-│       │   │   │   ├── //1. 判斷有無 JWT Token。
-│       │   │   │   ├── 2. get JWT Token 登入者信息, use ViewBag 帶入登入者信息。
-│       │   │   │   ├── 3. use skill TimeSpan 帶入下拉值範圍。
-│       │   │   │   ├── 4. use skill Fetch-API GET&POST
-│       │   │   │   ├── 5. use skill Session Storage 帶入信息。
-│       │   │   │   ├── 6. use skill Local Storage 帶入信息。
-│       │   │   │   ├── 7. use ViewBag 帶入療程項目 List。
-│       │   │   │   ├── 8. use window.history.back(); and window.location.href 回到上一個或指定 View。
-│       │   │   │   └── 9. use fetch submit form。
-│       │   │   └── Calendar
+│       │   │   ├── booi
+│       │   │   │   ├── Install pack F
+│       │   │   │   ├── Install pack D
+│       │   │   │   ├── fetch GET POST
+│       │   │   │   ├── 1. get JWT Token 登入者信息, use ViewBag 帶入登入者信息。
+│       │   │   │   ├── 2. use skill TimeSpan 帶入下拉值範圍。
+│       │   │   │   ├── 3. use skill Fetch-API GET&POST
+│       │   │   │   ├── 4. use skill Session Storage 帶入信息。
+│       │   │   │   ├── 5. use skill Local Storage 帶入信息。
+│       │   │   │   ├── 6. use ViewBag 帶入療程項目 List。
+│       │   │   │   ├── 7. use window.history.back(); and window.location.href 回到上一個或指定 View。
+│       │   │   │   └── 8. use fetch submit form。
+│       │   │   └── cale
+│       │   │       ├── Install pack FC
+│       │   │       ├── fetch GET
 │       │   │       ├── 1. action 判斷有無登入後創建的 JWT Token。
 │       │   │       └── 2. use TimeSpan 帶入下拉值範圍。
