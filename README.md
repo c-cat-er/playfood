@@ -37,8 +37,8 @@ A:3 P:3
 - [web modpack 連結 1](https://github.com/c-cat-er/ModPack)
 - [web modpack 連結 2](https://github.com/c-cat-er/ModPack)
 - [其他專案連結(更新或常態時不公開，若有收到連結請聯繫LINE或電話)](https://github.com/c-cat-er/MyPublicWork)
-- [web appo快捷]()
-- [web niko快捷]()
+- [web booi快捷]()
+- [web lodg快捷]()
 
 ## modpack 相關影片
 
