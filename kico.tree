@@ -31,24 +31,25 @@ kico
 │   │   ├── js-cookie
 
 ├── 功能概述:
-│   ├── register \ login \ Third第三方
-│   │   ├── 基本驗證與通知
-│   │   ├── use OAuth
-│   │   ├── use Jwt Token
-│   │   ├── use Sha3
-│   │   ├── use HttpOnly, Secure, js-cookie, jwtDecode
-│   ├── 首頁
-│   │   ├── cookie 儲存
-│   ├── 產品服務頁
-│   ├── 購物車
-│   │   ├── pinia 儲存
-│   │   ├── 
-│   │   └── ..
-│   ├── 會員後台
-│   │   ├── DM
-│   │   ├── OM
-│   ├── 管理者後台
-│   │   ├── CMS
-│   │   ├── PMS
-│   │   ├── OMS
+│   ├── 前端 Vue3
+│   │   ├── register \ login \ Third第三方
+│   │   │   ├── 基本驗證與通知
+│   │   │   ├── use Jwt Token
+│   │   │   ├── use OAuth
+│   │   │   ├── use Sha3
+│   │   │   ├── use HttpOnly, Secure, js-cookie, jwtDecode
+│   │   ├── 首頁
+│   │   │   ├── cookie storage
+│   │   ├── 產品服務頁
+│   │   ├── 購物車
+│   │   │   ├── pinia storage
+│   │   │   ├── 藍星、綠界串接
+│   │   │   └── ..
+│   │   ├── 會員後台
+│   │   │   ├── DM
+│   │   │   ├── OM
+│   ├── 後台 進行中..
+│   │   │   ├── CMS
+│   │   │   ├── PMS
+│   │   │   ├── OMS
 
