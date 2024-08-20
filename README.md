@@ -32,15 +32,19 @@ A:3 P:3
 9. 商品管理窗：基本商品資料 CRUD，含圖與列呈現方式(搜尋、新增商品尚未實現)。
 10. 訂單管理窗：基本訂單資料 CRUD，含數據圖表(折線尚未實現)。
 
+# 我的相關所學
+- [資料庫相關所學](https://github.com/c-cat-er/ModPack)
+- [編程相關所學](https://github.com/c-cat-er/ModPack)
+
 # 或要看其他專案
 
 - [web modpack 連結 1](https://github.com/c-cat-er/ModPack)
 - [web modpack 連結 2](https://github.com/c-cat-er/ModPack)
 - [其他專案連結(更新或常態時不公開，若有收到連結請聯繫LINE或電話)](https://github.com/c-cat-er/MyPublicWork)
-- [web boha快捷 (Web API + Web MVC)]()
-- [web kico快捷 (Vuejs + Web API + Web MVC)]()
+- [website boha 概述快捷(Web API + Web MVC)](https://github.com/c-cat-er/ModPack)
+- [webaite kico 概述快捷(Vuejs + Web API + Web MVC)](https://github.com/c-cat-er/ModPack)
 
-## modpack 相關影片
+## 專案 modpack 相關影片
 
 1. https://youtube.com/clip/UgkxlgAw5g9jDJqhSY6UffTJp1DeR1SfrYl8?si=N_eIJupCFEzPkbLl
 2. https://youtube.com/clip/UgkxKdq9HAPkYTYCaAron5E3FRTEyuzmal-P?si=lptl0Bh_sbRphCKk
