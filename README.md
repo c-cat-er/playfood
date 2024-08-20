@@ -13,9 +13,9 @@
 1. [-1](https://github.com/c-cat-er/playfood/tree/main/images)。
 2. [-2](https://github.com/c-cat-er/playfood/tree/main/images)。
 - 啟用帳密：
-A:1 P:1
-A:2 P:2
-A:3 P:3
+1. 第一組：A:1 P:1
+2. 第二組：A:2 P:2
+3. 第三組：A:3 P:3
 
 ## 功能概述
 1. 登入窗：含登入驗證、登入歡迎通知。
